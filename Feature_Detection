@@ -1,19 +1,108 @@
 import cv2
 import numpy as np
 
+epsilon = 0.0000000000000000001
+# filename = input("Name of the image : ")
+# img = cv2.imread(filename)
+# gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#
+# gray = np.float32(gray)
+# dst = cv2.cornerHarris(gray,2,3,0.04)
+#
+# #result is dilated for marking the corners, not important
+# dst = cv2.dilate(dst,None)
+#
+# # Threshold for an optimal value, it may vary depending on the image.
+# img[dst>0.01*dst.max()]=[0,0,255]
+#
+# cv2.imshow('dst',img)
+# if cv2.waitKey(0) & 0xff == 27:
+#     cv2.destroyAllWindows()
+
+def FindCorners(image , window_size = 5) :  # we create a function that will find corners
+
+    #  For each point in the image, consider a window of pixels around that point
+    # We choose a window of size 5
+    # construct the Sobel x-axis kernel
+
+    cv2.imshow('dst', image)
+
+    img_matrix = np.asarray(img)
+    sobelX = np.array((
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]), dtype="int")
+
+    # construct the Sobel y-axis kernel
+    sobelY = np.array((
+        [-1, -2, -1],
+        [0, 0, 0],
+        [1, 2, 1]), dtype="int")
+
+    gaussianMask = np.array((
+        [1, 4, 7, 4, 1],
+        [4, 16, 26, 16, 4],
+        [7, 26, 41, 26, 7],
+        [4, 16, 26, 16, 4],
+        [1, 4, 7, 4, 1],), dtype="int") / 273
+
+    dx = cv2.filter2D(image,-1,sobelX)
+    print(dx)
+    cv2.imshow("dx",dx)
+
+    dy = cv2.filter2D(image, -1, sobelY)
+    print(dy)
+    cv2.imshow("dy", dy)
+
+    Ixx = dx * dx
+    Iyy = dy * dy
+    Ixy = dx * dy
+
+    height = image.shape[0]
+    width = image.shape[1]
+    cv2.imshow("Ixx", Ixx)
+    cv2.imshow("Iyy", Iyy)
+
+    Ixx_smooth = cv2.filter2D(Ixx, -1, gaussianMask)
+    Iyy_smooth = cv2.filter2D(Iyy, -1, gaussianMask)
+    Ixy_smooth = cv2.filter2D(Ixy, -1, gaussianMask)
+
+    newImg = img.copy()
+    #color_img = cv2.cvtColor(newImg, cv2.COLOR_GRAY2RGB)
+    offset = int(window_size/2)
+
+
+    cv2.imshow("Ixy", Ixy)
+    cv2.imshow("Ixy_smoothed", Ixy_smooth)
+    print(Ixy)
+    M = img_matrix.copy()
+
+    for i in range(offset, height - offset):
+        for j in range(offset, width - offset):
+            windowIxx = Ixx_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
+            windowIyy = Iyy_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
+            windowIxy = Ixy_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
+
+            Sxx = windowIxx.sum()
+            Syy = windowIyy.sum()
+            Sxy = windowIxy.sum()
+
+            # H = np.array((
+            #     [Sxx, Sxy],
+            #     [Sxy, Syy]), dtype="int")
+
+            det = (Sxx * Syy) - (Sxy **2)
+            trace = Sxx + Syy
+            c = det / (trace + epsilon)
+    print("det" + str(det)  + " trace " + str(trace) + " trace " + str(trace))
+    print("Hauteur" + str(height) + " / " + str(len(img_matrix)) + " Largeur " + str(width))
+    print(windowIxx.sum())
+
+
+    if cv2.waitKey(0) & 0xff == 27:
+        cv2.destroyAllWindows()
+
 filename = input("Name of the image : ")
 img = cv2.imread(filename)
-gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
-gray = np.float32(gray)
-dst = cv2.cornerHarris(gray,2,3,0.04)
-
-#result is dilated for marking the corners, not important
-dst = cv2.dilate(dst,None)
-
-# Threshold for an optimal value, it may vary depending on the image.
-img[dst>0.01*dst.max()]=[0,0,255]
-
-cv2.imshow('dst',img)
-if cv2.waitKey(0) & 0xff == 27:
-    cv2.destroyAllWindows()
+FindCorners(img)
