@@ -1,43 +1,45 @@
 import cv2
 import numpy as np
+from skimage.util import img_as_float
+from skimage.color import rgb2gray
+from scipy import signal as sig
+from scipy import ndimage as ndi
 
-epsilon = 0.0000000000000000001
-# filename = input("Name of the image : ")
-# img = cv2.imread(filename)
-# gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-#
-# gray = np.float32(gray)
-# dst = cv2.cornerHarris(gray,2,3,0.04)
-#
-# #result is dilated for marking the corners, not important
-# dst = cv2.dilate(dst,None)
-#
-# # Threshold for an optimal value, it may vary depending on the image.
-# img[dst>0.01*dst.max()]=[0,0,255]
-#
-# cv2.imshow('dst',img)
-# if cv2.waitKey(0) & 0xff == 27:
-#     cv2.destroyAllWindows()
+epsilon = 0.000000000000000001
 
-def FindCorners(image , window_size = 5) :  # we create a function that will find corners
+def gradient_x(image_grey):
+    sobel_x = np.array((
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]))
+    return sig.convolve2d(image_grey, sobel_x, mode="same")
+
+def gradient_y(image_grey):
+    sobel_y = np.array((
+        [1, 2, 1],
+        [0, 0, 0],
+        [-1, -2, -1]))
+    return sig.convolve2d(image_grey, sobel_y, mode="same")
+
+
+
+def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a function that will find corners
 
     #  For each point in the image, consider a window of pixels around that point
     # We choose a window of size 5
     # construct the Sobel x-axis kernel
 
+
+
     cv2.imshow('dst', image)
+    image_grey = rgb2gray(image)
+    cv2.imshow('grey', image_grey)
 
-    img_matrix = np.asarray(img)
-    sobelX = np.array((
-        [-1, 0, 1],
-        [-2, 0, 2],
-        [-1, 0, 1]), dtype="int")
 
-    # construct the Sobel y-axis kernel
-    sobelY = np.array((
-        [-1, -2, -1],
-        [0, 0, 0],
-        [1, 2, 1]), dtype="int")
+    img_matrix = np.asarray(image, dtype=float)
+    img_matrix_float = img_as_float(img_matrix)
+
+
 
     gaussianMask = np.array((
         [1, 4, 7, 4, 1],
@@ -46,57 +48,118 @@ def FindCorners(image , window_size = 5) :  # we create a function that will fin
         [4, 16, 26, 16, 4],
         [1, 4, 7, 4, 1],), dtype="int") / 273
 
-    dx = cv2.filter2D(image,-1,sobelX)
-    print(dx)
-    cv2.imshow("dx",dx)
+    I_x = gradient_x(image_grey)
 
-    dy = cv2.filter2D(image, -1, sobelY)
-    print(dy)
-    cv2.imshow("dy", dy)
+    #print(dx)
+    #cv2.imshow("I_x", I_x)
 
-    Ixx = dx * dx
-    Iyy = dy * dy
-    Ixy = dx * dy
+    #I_yyyy = cv2.filter2D(img_matrix_float, -1, sobel_y)
+    I_y = gradient_y(image_grey)
+
+    #cv2.imshow("I_y", I_y)
+
+
+    # Ixx = I_x ** 2
+    # Iyy = I_y ** 2
+    # Ixy = I_x * I_y
+
+    Ixx = ndi.gaussian_filter(I_x**2, sigma=1)
+    Iyy = ndi.gaussian_filter(I_y**2, sigma=1)
+    Ixy = ndi.gaussian_filter(I_x*I_y, sigma=1)
 
     height = image.shape[0]
     width = image.shape[1]
     cv2.imshow("Ixx", Ixx)
     cv2.imshow("Iyy", Iyy)
-
-    Ixx_smooth = cv2.filter2D(Ixx, -1, gaussianMask)
-    Iyy_smooth = cv2.filter2D(Iyy, -1, gaussianMask)
-    Ixy_smooth = cv2.filter2D(Ixy, -1, gaussianMask)
-
-    newImg = img.copy()
-    #color_img = cv2.cvtColor(newImg, cv2.COLOR_GRAY2RGB)
-    offset = int(window_size/2)
-
-
     cv2.imshow("Ixy", Ixy)
-    cv2.imshow("Ixy_smoothed", Ixy_smooth)
-    print(Ixy)
-    M = img_matrix.copy()
 
-    for i in range(offset, height - offset):
-        for j in range(offset, width - offset):
-            windowIxx = Ixx_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
-            windowIyy = Iyy_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
-            windowIxy = Ixy_smooth[i - offset:i + offset + 1, j - offset:j + offset + 1]
+    # Ixx_smooth = cv2.filter2D(Ixx, -1, gaussianMask)
+    # Iyy_smooth = cv2.filter2D(Iyy, -1, gaussianMask)
+    # Ixy_smooth = cv2.filter2D(Ixy, -1, gaussianMask)
 
-            Sxx = windowIxx.sum()
-            Syy = windowIyy.sum()
-            Sxy = windowIxy.sum()
 
-            # H = np.array((
-            #     [Sxx, Sxy],
-            #     [Sxy, Syy]), dtype="int")
 
-            det = (Sxx * Syy) - (Sxy **2)
-            trace = Sxx + Syy
-            c = det / (trace + epsilon)
-    print("det" + str(det)  + " trace " + str(trace) + " trace " + str(trace))
+
+
+
+
+
+
+
+
+    det = (Ixx * Iyy) - (Ixy ** 2)
+    trace = Ixx + Iyy
+
+
+
+    c_response =  det /  (trace + epsilon)
+    #c_response = det - k*(trace**2)
+
+    tresh = 0.05 * c_response.max()
+
+    print(c_response)
+
+
+    img_copy_for_corners = np.copy(image)
+    img_copy_for_edges = np.copy(image)
+    for rowindex, response in enumerate(c_response):
+        for colindex, c in enumerate(response):
+            if c > tresh:
+                # this is a corner
+                img_copy_for_corners[rowindex, colindex] = [255,0,0]
+            elif c < 0:
+                # this is an edge
+                img_copy_for_edges[rowindex, colindex] = [0,255,0]
+
+    cv2.imshow("corners", img_copy_for_corners)
+    cv2.imshow("edges", img_copy_for_edges )
+
+
+
+    #print("Sum + " + str(Ixx.sum()) )
+    #print("Sum + " + str(Ixx_smooth.sum()))
+    #print(str(range(offset, height - offset)))
+
+    # for i in range(offset, height - offset):
+    #     for j in range(offset, width - offset):
+    #         windowIxx = Ixx[i - offset:i + offset + 1, j - offset:j + offset + 1]
+    #         windowIyy = Iyy[i - offset:i + offset + 1, j - offset:j + offset + 1]
+    #         windowIxy = Ixy[i - offset:i + offset + 1, j - offset:j + offset + 1]
+    #
+    #         Sxx = windowIxx.sum()
+    #         Syy = windowIyy.sum()
+    #         Sxy = windowIxy.sum()
+    #
+    #         # H = np.array((
+    #         #     [Sxx, Sxy],
+    #         #     [Sxy, Syy]), dtype="int")
+    #
+    #         det = (Sxx * Syy) - (Sxy **2)
+    #         trace = Sxx + Syy
+    #         c = det / (trace + epsilon)
+    #
+    #         if c > tresh:
+    #             newImg.itemset((i, j, 0), 0)
+    #             newImg.itemset((i, j, 1), 0 )
+    #             newImg.itemset((i, j, 2), 255)
+    #
+    #         else :
+    #             newImg.itemset((i, j, 0), 0)
+    #             newImg.itemset((i, j, 1), 0)
+    #             newImg.itemset((i, j, 2), 255)
+
+    # for i in range(offset, height - offset):
+    #     for j in range(offset, width - offset):
+    #
+    #         if c > tresh:
+    #                  newImg.itemset((i, j, 0), 0)
+    #                  newImg.itemset((i, j, 1), 255 )
+    #                  newImg.itemset((i, j, 2), 255)
+
+
+    #print("det" + str(det)  + " trace " + str(trace) + " c " + str(c))
     print("Hauteur" + str(height) + " / " + str(len(img_matrix)) + " Largeur " + str(width))
-    print(windowIxx.sum())
+
 
 
     if cv2.waitKey(0) & 0xff == 27:
