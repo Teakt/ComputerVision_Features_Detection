@@ -21,13 +21,30 @@ def gradient_y(image_grey):
         [-1, -2, -1]))
     return sig.convolve2d(image_grey, sobel_y, mode="same")
 
+def Find_Local_Peaks(matrix):
+
+    array_with_the_max_peak_coordinates = np.array(
+        [0, 0],
+        )
+    #print(array_with_the_max_peak_coordinates)
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            #print(matrix[i][j], end=' ')
+
+            if matrix[i][j] >= matrix[array_with_the_max_peak_coordinates[0]][array_with_the_max_peak_coordinates[1]]:
+                array_with_the_max_peak_coordinates[0] = i
+                array_with_the_max_peak_coordinates[1] = j
+    #print(array_with_the_max_peak_coordinates)
+
+    return array_with_the_max_peak_coordinates
 
 
-def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a function that will find corners
+def Find_Corners(image , window_size = 3, k=0.04 , tresh = 0) :  # we create a function that will find corners
 
     #  For each point in the image, consider a window of pixels around that point
     # We choose a window of size 5
     # construct the Sobel x-axis kernel
+
 
 
 
@@ -86,7 +103,6 @@ def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a fu
 
 
 
-
     det = (Ixx * Iyy) - (Ixy ** 2)
     trace = Ixx + Iyy
 
@@ -96,7 +112,7 @@ def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a fu
     #c_response = det - k*(trace**2)
 
     tresh = 0.05 * c_response.max()
-
+    
     print(c_response)
 
 
@@ -114,47 +130,17 @@ def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a fu
     cv2.imshow("corners", img_copy_for_corners)
     cv2.imshow("edges", img_copy_for_edges )
 
-
-
+    offset = window_size / 2
+    print("OFFSET",offset)
     #print("Sum + " + str(Ixx.sum()) )
     #print("Sum + " + str(Ixx_smooth.sum()))
     #print(str(range(offset, height - offset)))
 
     # for i in range(offset, height - offset):
     #     for j in range(offset, width - offset):
-    #         windowIxx = Ixx[i - offset:i + offset + 1, j - offset:j + offset + 1]
-    #         windowIyy = Iyy[i - offset:i + offset + 1, j - offset:j + offset + 1]
-    #         windowIxy = Ixy[i - offset:i + offset + 1, j - offset:j + offset + 1]
-    #
-    #         Sxx = windowIxx.sum()
-    #         Syy = windowIyy.sum()
-    #         Sxy = windowIxy.sum()
-    #
-    #         # H = np.array((
-    #         #     [Sxx, Sxy],
-    #         #     [Sxy, Syy]), dtype="int")
-    #
-    #         det = (Sxx * Syy) - (Sxy **2)
-    #         trace = Sxx + Syy
-    #         c = det / (trace + epsilon)
-    #
-    #         if c > tresh:
-    #             newImg.itemset((i, j, 0), 0)
-    #             newImg.itemset((i, j, 1), 0 )
-    #             newImg.itemset((i, j, 2), 255)
-    #
-    #         else :
-    #             newImg.itemset((i, j, 0), 0)
-    #             newImg.itemset((i, j, 1), 0)
-    #             newImg.itemset((i, j, 2), 255)
 
-    # for i in range(offset, height - offset):
-    #     for j in range(offset, width - offset):
-    #
-    #         if c > tresh:
-    #                  newImg.itemset((i, j, 0), 0)
-    #                  newImg.itemset((i, j, 1), 255 )
-    #                  newImg.itemset((i, j, 2), 255)
+
+
 
 
     #print("det" + str(det)  + " trace " + str(trace) + " c " + str(c))
@@ -165,7 +151,17 @@ def FindCorners(image , window_size = 5, k=0.04 , tresh = 0) :  # we create a fu
     if cv2.waitKey(0) & 0xff == 27:
         cv2.destroyAllWindows()
 
-filename = input("Name of the image : ")
-img = cv2.imread(filename)
 
-FindCorners(img)
+
+def main():
+
+    filename = input("Name of the image : ")
+    img = cv2.imread(filename)
+    response = np.zeros((5, 5))
+    response[2:4, 2:4] = 1
+    Find_Local_Peaks(response)
+
+    Find_Corners(img)
+
+
+main()
