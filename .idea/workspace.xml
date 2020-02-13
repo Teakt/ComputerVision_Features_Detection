@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="64b9ac5a-dae4-4dfa-b46c-1d89d05bc977" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Feature_Detection" beforeDir="false" afterPath="$PROJECT_DIR$/Feature_Detection" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Feature_Description" beforeDir="false" afterPath="$PROJECT_DIR$/Feature_Description" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" afterPath="$PROJECT_DIR$/test" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.png" beforeDir="false" afterPath="$PROJECT_DIR$/test.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +29,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -34,7 +37,28 @@
       <recent name="C:\Users\teakg\Desktop\4A_CANADA2020\ComputerVision\Assignement2_Teak_Vision" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.test">
+    <configuration name="Feature_Description" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Assignement2_Teak_Vision" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\teakg\Anaconda3\envs\Assignement2_Teak_Vision\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Feature_Description" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Feature_Detection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Assignement2_Teak_Vision" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -77,8 +101,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Assignement2_Teak_Vision" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\teakg\Anaconda3\envs\Assignement2_Teak_Vision\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.Feature_Description" />
         <item itemvalue="Python.Feature_Detection" />
       </list>
     </recent_temporary>
@@ -113,10 +160,14 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="254" y="86" width="1092" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1600.860@0.0.1600.860" timestamp="1580716463126" />
-    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580716152937">
+    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581268149703">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1600.860@0.0.1600.860" timestamp="1580716152937" />
+    <state x="537" y="234" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1600.860@0.0.1600.860" timestamp="1581268149703" />
+    <state x="226" y="184" key="#xdebugger.XInspectDialog" timestamp="1581553857590">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="226" y="184" key="#xdebugger.XInspectDialog/0.0.1600.860@0.0.1600.860" timestamp="1581553857590" />
     <state x="580" y="195" key="FileChooserDialogImpl" timestamp="1580716454693">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -125,49 +176,94 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="634" y="347" width="356" height="166" key="Github.CreateGistDialog/0.0.1600.860@0.0.1600.860" timestamp="1580715539303" />
-    <state width="1579" height="222" key="GridCell.Tab.0.bottom" timestamp="1581201842898">
+    <state width="1579" height="276" key="GridCell.Tab.0.bottom" timestamp="1581588637370">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581201842898" />
-    <state width="1579" height="222" key="GridCell.Tab.0.center" timestamp="1581201842898">
+    <state width="1579" height="276" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581588637370" />
+    <state width="1579" height="276" key="GridCell.Tab.0.center" timestamp="1581588637370">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581201842898" />
-    <state width="1579" height="222" key="GridCell.Tab.0.left" timestamp="1581201842898">
+    <state width="1579" height="276" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581588637370" />
+    <state width="1579" height="276" key="GridCell.Tab.0.left" timestamp="1581588637370">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581201842898" />
-    <state width="1579" height="222" key="GridCell.Tab.0.right" timestamp="1581201842898">
+    <state width="1579" height="276" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581588637370" />
+    <state width="1579" height="276" key="GridCell.Tab.0.right" timestamp="1581588637370">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581201842898" />
-    <state width="1579" height="276" key="GridCell.Tab.1.bottom" timestamp="1580859356468">
+    <state width="1579" height="276" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581588637370" />
+    <state width="1579" height="276" key="GridCell.Tab.1.bottom" timestamp="1581588641743">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1580859356468" />
-    <state width="1579" height="276" key="GridCell.Tab.1.center" timestamp="1580859356468">
+    <state width="1579" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581588641743" />
+    <state width="1579" height="276" key="GridCell.Tab.1.center" timestamp="1581588641743">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1580859356468" />
-    <state width="1579" height="276" key="GridCell.Tab.1.left" timestamp="1580859356468">
+    <state width="1579" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1581588641743" />
+    <state width="1579" height="276" key="GridCell.Tab.1.left" timestamp="1581588641743">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1580859356468" />
-    <state width="1579" height="276" key="GridCell.Tab.1.right" timestamp="1580859356468">
+    <state width="1579" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1581588641743" />
+    <state width="1579" height="276" key="GridCell.Tab.1.right" timestamp="1581588641743">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1580859356468" />
+    <state width="1579" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1581588641743" />
     <state x="301" y="73" key="SettingsEditor" timestamp="1580716426329">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="301" y="73" key="SettingsEditor/0.0.1600.860@0.0.1600.860" timestamp="1580716426329" />
-    <state x="495" y="255" key="com.intellij.ide.util.TipDialog" timestamp="1581197990586">
+    <state x="495" y="255" key="com.intellij.ide.util.TipDialog" timestamp="1581573466129">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state x="495" y="255" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1581197990586" />
+    <state x="495" y="255" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1581573466129" />
     <state x="609" y="348" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1580716337258">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="609" y="348" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1600.860@0.0.1600.860" timestamp="1580716337258" />
+    <state x="371" y="167" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1581206207648">
+      <screen x="0" y="0" width="1600" height="860" />
+    </state>
+    <state x="371" y="167" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1600.860@0.0.1600.860" timestamp="1581206207648" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Detection</url>
+          <line>142</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>119</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test</url>
+          <line>54</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test</url>
+          <line>72</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test</url>
+          <line>71</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test</url>
+          <line>73</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test</url>
+          <line>85</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

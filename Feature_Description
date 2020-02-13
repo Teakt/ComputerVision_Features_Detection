@@ -39,7 +39,7 @@ def Find_Local_Peaks(matrix):
     return array_with_the_max_peak_coordinates
 
 
-def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a function that will find corners
+def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a function that will find corners
 
     #  For each point in the image, consider a window of pixels around that point
     # We choose a window of size 5
@@ -48,13 +48,12 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
 
 
 
-    cv2.imshow('dst', image)
+    cv2.imshow('source_image', image)
     image_grey = rgb2gray(image)
-    cv2.imshow('grey', image_grey)
+    #cv2.imshow('grey', image_grey)
 
 
     img_matrix = np.asarray(image, dtype=float)
-    img_matrix_float = img_as_float(img_matrix)
 
 
 
@@ -67,18 +66,8 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
 
     I_x = gradient_x(image_grey)
 
-    #print(dx)
-    #cv2.imshow("I_x", I_x)
-
-    #I_yyyy = cv2.filter2D(img_matrix_float, -1, sobel_y)
     I_y = gradient_y(image_grey)
 
-    #cv2.imshow("I_y", I_y)
-
-
-    # Ixx = I_x ** 2
-    # Iyy = I_y ** 2
-    # Ixy = I_x * I_y
 
     Ixx = ndi.gaussian_filter(I_x**2, sigma=1)
     Iyy = ndi.gaussian_filter(I_y**2, sigma=1)
@@ -86,18 +75,6 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
 
     height = image.shape[0]
     width = image.shape[1]
-    cv2.imshow("Ixx", Ixx)
-    cv2.imshow("Iyy", Iyy)
-    cv2.imshow("Ixy", Ixy)
-
-    # Ixx_smooth = cv2.filter2D(Ixx, -1, gaussianMask)
-    # Iyy_smooth = cv2.filter2D(Iyy, -1, gaussianMask)
-    # Ixy_smooth = cv2.filter2D(Ixy, -1, gaussianMask)
-
-
-
-
-
 
 
 
@@ -114,7 +91,7 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
     tresh = 0.05 * c_response.max()
     
     print(type(c_response))
-    print("PUTAIN3")
+
 
     offset = int(window_size / 2)
 
@@ -145,29 +122,12 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
             if c > tresh:
                 # this is a corner
                 img_copy_for_corners[rowindex, colindex] = [255,0,0]
+
             elif c < 0:
                 # this is an edge
                 img_copy_for_edges[rowindex, colindex] = [0,255,0]
 
 
-    cv2.imshow("corners", img_copy_for_corners)
-    cv2.imshow("edges", img_copy_for_edges )
-
-
-    #print("Sum + " + str(Ixx.sum()) )
-    #print("Sum + " + str(Ixx_smooth.sum()))
-    #print(str(range(offset, height - offset)))
-
-    # for i in range(offset, height - offset):
-    #     for j in range(offset, width - offset):
-    #
-    #         window_matrix = np.array(image_grey[i-1:i+1, j-1:j+1])
-    #         max_coord = Find_Local_Peaks(window_matrix)
-    #
-    #         for x in range(i-1,i+1):
-    #             for y in range(j -1, j + 1 ):
-    #                 if x != max_coord[0] and y != max_coord[1] :
-    #                     img_copy_for_corners[x][y] = [0,0,0]
 
     cv2.imshow("corners_LOCAL", img_copy_for_corners)
 
@@ -181,20 +141,19 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
     if cv2.waitKey(0) & 0xff == 27:
         cv2.destroyAllWindows()
 
-    return img_copy_for_corners
+    return c_response
 
 
 def main():
 
     filename = input("Name of the image : ")
     img = cv2.imread(filename)
-    # response = np.zeros((5, 5))
-    # response[2:4, 2:4] = 1
-    # Find_Local_Peaks(response)
+
 
     result = Find_Corners(img)
+    print(result)
 
-    cv2.imwrite('forpaint.png', result)
 
 
 main()
+
