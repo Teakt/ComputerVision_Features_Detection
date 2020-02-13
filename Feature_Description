@@ -141,7 +141,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
     if cv2.waitKey(0) & 0xff == 27:
         cv2.destroyAllWindows()
 
-    return img_copy_for_corners
+    return c_response
 
 
 def main():
@@ -151,8 +151,9 @@ def main():
 
 
     result = Find_Corners(img)
+    print(result)
 
-    cv2.imwrite('forpaint.png', result)
 
 
 main()
+
