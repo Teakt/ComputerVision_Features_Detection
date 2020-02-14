@@ -112,11 +112,11 @@ def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #imag
     #print(theta_mat)
     dimensional_descriptor_mat = np.zeros((height, width, 128)
                                           )
-    for rowindex in range(offset, height + offset):
-        for colindex in range(offset, width + offset):
+    for rowindex in range(offset, height - offset):
+        for colindex in range(offset, width - offset):
 
 
-            if interest_point[rowindex - offset, colindex - offset] > 0:
+            if interest_point[rowindex, colindex] > 0:
                 window16x16 = theta_mat[rowindex - offset - 7: rowindex - offset + 9, colindex - offset - 7: colindex - offset + 9]
                 divided_mat = blockshaped(window16x16, 4, 4)
                 #print(divided_mat)
@@ -144,7 +144,7 @@ def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #imag
 
 
 
-    return theta_mat
+    return theta_mat, dimensional_descriptor_mat
 
 #def Orientation_Histogram(theta_mat):  # we have as input a matrix that contains degrees
 
@@ -181,7 +181,7 @@ def normalize(v):
 
 def main():
     mat = np.zeros((40, 40), dtype=float)
-    #mat[-1:, -1:] = 0.5
+    #mat[:, :] = 0.5
     mat[16, 16] = 0.8
     #mat[0, 0] = 0.9
     mat[7, 5] = 1
@@ -194,10 +194,12 @@ def main():
     image_grey = rgb2gray(img)
     #theta_mat = image_grey.copy()
     #print(theta_mat)
+    print(type(mat))
     print(str(len(mat)) + " " + str(len(mat[0])))
     print(str(len(image_grey)) + " " + str(len(image_grey[0])))
-    theta_mat = Assign_Orientation(image_grey, mat, img_copy)
+    theta_mat, dimensional_descriptor_mat = Assign_Orientation(image_grey, mat, img_copy)
     print(theta_mat)
+    print(dimensional_descriptor_mat)
 
     r = 600 / image_grey.shape[1]
     dim = (600, int(image_grey.shape[0] * r))

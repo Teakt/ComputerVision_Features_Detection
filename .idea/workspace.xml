@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="64b9ac5a-dae4-4dfa-b46c-1d89d05bc977" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Feature_Description" beforeDir="false" afterPath="$PROJECT_DIR$/Feature_Description" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test" beforeDir="false" afterPath="$PROJECT_DIR$/test" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +36,7 @@
       <recent name="C:\Users\teakg\Desktop\4A_CANADA2020\ComputerVision\Assignement2_Teak_Vision" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.Feature_Description">
     <configuration name="Feature_Description" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Assignement2_Teak_Vision" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -122,8 +123,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.Feature_Description" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.Feature_Detection" />
       </list>
     </recent_temporary>
@@ -174,38 +175,38 @@
       <screen x="0" y="0" width="1600" height="860" />
     </state>
     <state x="634" y="347" width="356" height="166" key="Github.CreateGistDialog/0.0.1600.860@0.0.1600.860" timestamp="1580715539303" />
-    <state width="1579" height="276" key="GridCell.Tab.0.bottom" timestamp="1581680591424">
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom" timestamp="1581689685078">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581680591424" />
-    <state width="1579" height="276" key="GridCell.Tab.0.center" timestamp="1581680591424">
+    <state width="1579" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581689685078" />
+    <state width="1579" height="222" key="GridCell.Tab.0.center" timestamp="1581689685078">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581680591424" />
-    <state width="1579" height="276" key="GridCell.Tab.0.left" timestamp="1581680591424">
+    <state width="1579" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1581689685078" />
+    <state width="1579" height="222" key="GridCell.Tab.0.left" timestamp="1581689685078">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581680591424" />
-    <state width="1579" height="276" key="GridCell.Tab.0.right" timestamp="1581680591424">
+    <state width="1579" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1581689685078" />
+    <state width="1579" height="222" key="GridCell.Tab.0.right" timestamp="1581689685078">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581680591424" />
-    <state width="1579" height="276" key="GridCell.Tab.1.bottom" timestamp="1581680594969">
+    <state width="1579" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1581689685078" />
+    <state width="1579" height="276" key="GridCell.Tab.1.bottom" timestamp="1581689561871">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581680594969" />
-    <state width="1579" height="276" key="GridCell.Tab.1.center" timestamp="1581680594969">
+    <state width="1579" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1581689561871" />
+    <state width="1579" height="276" key="GridCell.Tab.1.center" timestamp="1581689561871">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1581680594969" />
-    <state width="1579" height="276" key="GridCell.Tab.1.left" timestamp="1581680594969">
+    <state width="1579" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1581689561871" />
+    <state width="1579" height="276" key="GridCell.Tab.1.left" timestamp="1581689561871">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1581680594969" />
-    <state width="1579" height="276" key="GridCell.Tab.1.right" timestamp="1581680594969">
+    <state width="1579" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1581689561871" />
+    <state width="1579" height="276" key="GridCell.Tab.1.right" timestamp="1581689561871">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1579" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1581680594969" />
+    <state width="1579" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1581689561871" />
     <state x="301" y="73" key="SettingsEditor" timestamp="1580716426329">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
@@ -227,16 +228,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Feature_Detection</url>
-          <line>142</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Feature_Description</url>
-          <line>119</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test</url>
           <line>57</line>
           <option name="timeStamp" value="19" />
@@ -257,41 +248,68 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test</url>
-          <line>212</line>
-          <option name="timeStamp" value="29" />
+          <url>file://$PROJECT_DIR$/Feature_Detection</url>
+          <line>194</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Detection</url>
+          <line>171</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Detection</url>
+          <line>153</line>
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>119</line>
+          <option name="timeStamp" value="79" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test</url>
-          <line>199</line>
-          <option name="timeStamp" value="38" />
+          <line>119</line>
+          <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test</url>
-          <line>146</line>
-          <option name="timeStamp" value="51" />
+          <line>120</line>
+          <option name="timeStamp" value="86" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test</url>
-          <line>124</line>
-          <option name="timeStamp" value="57" />
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>295</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test</url>
-          <line>123</line>
-          <option name="timeStamp" value="58" />
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>297</line>
+          <option name="timeStamp" value="91" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test</url>
-          <line>137</line>
-          <option name="timeStamp" value="63" />
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>288</line>
+          <option name="timeStamp" value="92" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test</url>
-          <line>142</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>236</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Feature_Description</url>
+          <line>240</line>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

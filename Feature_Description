@@ -4,8 +4,10 @@ from skimage.util import img_as_float
 from skimage.color import rgb2gray
 from scipy import signal as sig
 from scipy import ndimage as ndi
+import math
 
-epsilon = 0.000000000000000001
+
+epsilon = 0.0001
 
 def gradient_x(image_grey):
     sobel_x = np.array((
@@ -48,7 +50,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
 
 
 
-    cv2.imshow('source_image', image)
+    #cv2.imshow('source_image', image)
     image_grey = rgb2gray(image)
     #cv2.imshow('grey', image_grey)
 
@@ -93,7 +95,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
     print(type(c_response))
 
 
-    offset = int(window_size / 2)
+    #offset = int(window_size / 2)
 
     #print(enumerate(c_response))
     img_copy_for_corners = np.copy(image)
@@ -115,7 +117,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
                     else:
                         c_response[x + i - 1][y + j - 1] = 0
 
-    #print(c_response)
+    print(c_response)
 
     for rowindex, response in enumerate(c_response):
         for colindex, c in enumerate(response):
@@ -138,20 +140,184 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
 
 
 
-    if cv2.waitKey(0) & 0xff == 27:
-        cv2.destroyAllWindows()
+
 
     return c_response
+
+
+def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #image is an image as an array, and interest_point are the answers as R values in an array the size of image
+
+    height = image_grey.shape[0]
+    width = image_grey.shape[1]
+
+    #check if image and interest_point are the same size
+    if type(image_grey) != type(interest_point) :
+        print("ERROR TYPE INPUTS , NOT SAME  TYPE")
+
+
+
+    else :
+        print("NO TYPE INPUT ERROR")
+
+    if len(image_grey) != len(interest_point) or len(image_grey[0]) != len(interest_point[0]):
+        print("ERROR TYPE INPUTS , NOT SAME  SIZE")
+        exit(1)
+    else:
+        print("NO SIZES INPUT ERROR")
+
+
+
+    i = 0
+    # for rowindex, responses in enumerate(interest_point):
+    #     for colindex, r in enumerate(responses):
+    #         if r > 0:
+    #             i+=1
+    #             print(r)
+    #
+    # print(i)
+
+    offset = int(window_size / 2)
+    theta_mat = np.zeros((height, width), dtype=float)
+    print(theta_mat)
+    for rowindex in range(offset, height - offset):
+        for colindex in range(offset, width - offset):
+
+            if interest_point[rowindex , colindex ] > 0:
+
+                print(interest_point[rowindex , colindex ])
+                a = image_grey[rowindex  - 7 : rowindex  + 9, colindex - 7 : colindex  + 9]
+                for i in range(len(a)):
+                    for j in range(len(a[i])):
+                        copy[rowindex  -7 + i,  colindex - 7 + j] = [255, 0, 255]
+                        theta_mat[rowindex  -7 + i,  colindex - 7 + j] = math.atan((image_grey[i][j + 1] - image_grey[i][j - 1])/( (image_grey[i + 1][j] - image_grey[i - 1][j]) + epsilon)) * 180 / math.pi
+
+
+                copy[rowindex , colindex ] = [0, 255, 0]
+
+    #print(a)
+    #print("theta")
+    #print(theta_mat)
+
+
+
+    for i in range(0 , height):
+        for j in range(0, width):
+            if theta_mat[i][j] < 0 :
+                theta_mat[i][j] += 360
+
+    #print(theta_mat)
+    dimensional_descriptor_mat = np.zeros((height, width, 128)
+                                          )
+    for rowindex in range(offset, height - offset):
+        for colindex in range(offset, width - offset):
+
+
+            if interest_point[rowindex, colindex] > 0:
+
+                window16x16 = theta_mat[rowindex - 7: rowindex + 9, colindex - 7: colindex  + 9]
+
+                divided_mat = blockshaped(window16x16, 4, 4)
+                #print(divided_mat)
+
+                concatened_dimensional_descriptor_hist = []
+                print(concatened_dimensional_descriptor_hist)
+                #we go through that divided array
+                for i in range(len(divided_mat)):
+
+                    hist, bin = np.histogram(divided_mat[i], bins=[0, 45, 90, 135, 180, 225, 270, 315, 360])
+                    #print(hist)
+                    hist = normalize(hist)
+                    #hist = Descriptor_Normalized(hist)
+                    #print(hist)
+                    #print(bin)
+                    for value in range(len(hist)): # add EACH CELL's Histogram to the concatened 128 values histogram vector
+                        concatened_dimensional_descriptor_hist.append(hist[value])
+
+                concatened_dimensional_descriptor_hist = np.asarray(concatened_dimensional_descriptor_hist)
+                print(str(sum(concatened_dimensional_descriptor_hist*concatened_dimensional_descriptor_hist)))
+                concatened_dimensional_descriptor_hist  = normalize(concatened_dimensional_descriptor_hist)
+                print(str(sum(concatened_dimensional_descriptor_hist * concatened_dimensional_descriptor_hist)))
+                concatened_dimensional_descriptor_hist = Descriptor_Normalized(concatened_dimensional_descriptor_hist)
+                print(str(sum(concatened_dimensional_descriptor_hist*concatened_dimensional_descriptor_hist)))
+                concatened_dimensional_descriptor_hist = normalize(concatened_dimensional_descriptor_hist)
+                print(str(sum(concatened_dimensional_descriptor_hist * concatened_dimensional_descriptor_hist)))
+
+                if len(concatened_dimensional_descriptor_hist) != 0:
+                    # We put this 128 values array into ITS POSITION IN THE DIMENSIONAL DESCRIPTOR MATRIX at ITS interest point
+                    dimensional_descriptor_mat[rowindex][ colindex ] = concatened_dimensional_descriptor_hist
+                    #print(dimensional_descriptor_mat)
+
+
+
+    return theta_mat, dimensional_descriptor_mat
+
+
+def Descriptor_Normalized(hist, threshold=0.2): #Treshold normalize the descriptor
+    for i in range(len(hist)):
+        if hist[i] > 0.2 :
+            hist[i] = 0.2
+    return  hist
+
+
+def blockshaped(arr, nrows, ncols):
+    """
+    Return an array of shape (n, nrows, ncols) where
+    n * nrows * ncols = arr.size
+
+    If arr is a 2D array, the returned array should look like n subblocks with
+    each subblock preserving the "physical" layout of arr.
+    """
+    h, w = arr.shape
+    assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
+    assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
+    return (arr.reshape(h // nrows, nrows, -1, ncols)
+            .swapaxes(1, 2)
+            .reshape(-1, nrows, ncols))
+
+
+def normalize(v):
+    norm = np.linalg.norm(v)
+    if norm == 0:
+       return v
+    return v / norm
 
 
 def main():
 
     filename = input("Name of the image : ")
     img = cv2.imread(filename)
+    img_copy = img.copy()
+    image_grey = rgb2gray(img)
+    matrix_with_C_responses = Find_Corners(img)
 
 
-    result = Find_Corners(img)
-    print(result)
+
+    #print(type(matrix_with_C_responses))
+    print(str(len(matrix_with_C_responses)) + " " + str(len(matrix_with_C_responses[0])))
+    print(str(len(image_grey)) + " " + str(len(image_grey[0])))
+    theta_mat, dimensional_descriptor_mat = Assign_Orientation(image_grey, matrix_with_C_responses, img_copy)
+    print(theta_mat)
+    print(dimensional_descriptor_mat)
+
+
+
+    #print(matrix_with_C_responses)
+
+    r = 600 / image_grey.shape[1]
+    dim = (600, int(image_grey.shape[0] * r))
+    # perform the actual resizing of the image and show it
+    resized = cv2.resize(image_grey, dim, interpolation=cv2.INTER_AREA)
+
+    r = 600 / img_copy.shape[1]
+    dim = (600, int(img_copy.shape[0] * r))
+    # perform the actual resizing of the image and show it
+    resized_copy = cv2.resize(img_copy, dim, interpolation=cv2.INTER_AREA)
+
+    cv2.imshow("test_img", resized)
+    cv2.imshow("copy", resized_copy)
+
+    if cv2.waitKey(0) & 0xff == 27:
+        cv2.destroyAllWindows()
 
 
 
