@@ -5,7 +5,7 @@ from skimage.color import rgb2gray
 from scipy import signal as sig
 from scipy import ndimage as ndi
 import math
-
+from numpy import linalg as LA
 
 
 epsilon = 0.05
@@ -110,8 +110,74 @@ def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #imag
                 theta_mat[i][j] += 360
 
     #print(theta_mat)
+    dimensional_descriptor_mat = np.zeros((height, width, 128)
+                                          )
+    for rowindex in range(offset, height + offset):
+        for colindex in range(offset, width + offset):
+
+
+            if interest_point[rowindex - offset, colindex - offset] > 0:
+                window16x16 = theta_mat[rowindex - offset - 7: rowindex - offset + 9, colindex - offset - 7: colindex - offset + 9]
+                divided_mat = blockshaped(window16x16, 4, 4)
+                #print(divided_mat)
+
+                concatened_dimensional_descriptor_hist = []
+                #print(concatened_dimensional_descriptor_hist)
+                #we go through that divided array
+                for i in range(len(divided_mat)):
+
+                    hist, bin = np.histogram(divided_mat[i], bins=[0, 45, 90, 135, 180, 225, 270, 315, 360])
+                    #print(hist)
+                    hist = normalize(hist)
+                    hist = Descriptor_Normalized(hist)
+                    #print(hist)
+                    #print(bin)
+                    for value in range(len(hist)): # add EACH CELL's Histogram to the concatened 128 values histogram vector
+                        concatened_dimensional_descriptor_hist.append(hist[value])
+
+                concatened_dimensional_descriptor_hist = np.asarray(concatened_dimensional_descriptor_hist)
+
+                if len(concatened_dimensional_descriptor_hist) != 0:
+                    # We put this 128 values array into ITS POSITION IN THE DIMENSIONAL DESCRIPTOR MATRIX at ITS interest point
+                    dimensional_descriptor_mat[rowindex - offset][ colindex - offset] = concatened_dimensional_descriptor_hist
+                    print(dimensional_descriptor_mat)
+
+
 
     return theta_mat
+
+#def Orientation_Histogram(theta_mat):  # we have as input a matrix that contains degrees
+
+
+
+def Descriptor_Normalized(hist, threshold=0.2): #Treshold normalize the descriptor
+    for i in range(len(hist)):
+        if hist[i] > 0.2 :
+            hist[i] = 0.2
+    return  hist
+
+
+def blockshaped(arr, nrows, ncols):
+    """
+    Return an array of shape (n, nrows, ncols) where
+    n * nrows * ncols = arr.size
+
+    If arr is a 2D array, the returned array should look like n subblocks with
+    each subblock preserving the "physical" layout of arr.
+    """
+    h, w = arr.shape
+    assert h % nrows == 0, "{} rows is not evenly divisble by {}".format(h, nrows)
+    assert w % ncols == 0, "{} cols is not evenly divisble by {}".format(w, ncols)
+    return (arr.reshape(h // nrows, nrows, -1, ncols)
+            .swapaxes(1, 2)
+            .reshape(-1, nrows, ncols))
+
+
+def normalize(v):
+    norm = np.linalg.norm(v)
+    if norm == 0:
+       return v
+    return v / norm
 
 def main():
     mat = np.zeros((40, 40), dtype=float)
