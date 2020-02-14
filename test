@@ -4,8 +4,11 @@ from skimage.util import img_as_float
 from skimage.color import rgb2gray
 from scipy import signal as sig
 from scipy import ndimage as ndi
+import math
 
 
+
+epsilon = 0.05
 
 def Find_Local_Peaks(matrix):
 
@@ -46,13 +49,13 @@ def Find_Peaks():
 
 
 
-def Assign_Orientation(image, interest_point, copy, window_size=16):  #image is an image as an array, and interest_point are the answers as R values in an array the size of image
+def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #image is an image as an array, and interest_point are the answers as R values in an array the size of image
 
-    height = image.shape[0]
-    width = image.shape[1]
+    height = image_grey.shape[0]
+    width = image_grey.shape[1]
 
     #check if image and interest_point are the same size
-    if type(image) != type(interest_point) :
+    if type(image_grey) != type(interest_point) :
         print("ERROR TYPE INPUTS , NOT SAME  TYPE")
 
 
@@ -60,7 +63,7 @@ def Assign_Orientation(image, interest_point, copy, window_size=16):  #image is 
     else :
         print("NO TYPE INPUT ERROR")
 
-    if len(image) != len(interest_point) or len(image[0]) != len(interest_point[0]):
+    if len(image_grey) != len(interest_point) or len(image_grey[0]) != len(interest_point[0]):
         print("ERROR TYPE INPUTS , NOT SAME  SIZE")
         exit(1)
     else:
@@ -78,32 +81,57 @@ def Assign_Orientation(image, interest_point, copy, window_size=16):  #image is 
     # print(i)
 
     offset = int(window_size / 2)
-
+    theta_mat = np.zeros((height, width), dtype=float)
+    print(theta_mat)
     for rowindex in range(offset, height + offset):
         for colindex in range(offset, width + offset):
 
             if interest_point[rowindex - offset, colindex - offset] > 0:
-                i += 1
+
                 print(interest_point[rowindex - offset, colindex - offset])
-                a = image[rowindex - offset - 1 : rowindex - offset + 3, colindex - offset - 1 : colindex - offset + 3]
+                a = image_grey[rowindex - offset - 7 : rowindex - offset + 9, colindex - offset - 7 : colindex - offset + 9]
+                for i in range(len(a)):
+                    for j in range(len(a[i])):
+                        copy[rowindex - offset -7 + i,  colindex - offset - 7 + j] = [255, 0, 255]
+                        theta_mat[rowindex - offset -7 + i,  colindex - offset - 7 + j] = math.atan((image_grey[i][j + 1] - image_grey[i][j - 1])/( (image_grey[i + 1][j] - image_grey[i - 1][j]) + epsilon)) * 180 / math.pi
+
+
                 copy[rowindex - offset, colindex - offset] = [0, 255, 0]
-    print(i)
-    print(a)
+
+    #print(a)
+    #print("theta")
+    #print(theta_mat)
 
 
+
+    for i in range(0 , height):
+        for j in range(0, width):
+            if theta_mat[i][j] < 0 :
+                theta_mat[i][j] += 360
+
+    #print(theta_mat)
+
+    return theta_mat
 
 def main():
     mat = np.zeros((40, 40), dtype=float)
-    mat[-2:, -2:] = 0.5
+    #mat[-1:, -1:] = 0.5
     mat[16, 16] = 0.8
+    #mat[0, 0] = 0.9
+    mat[7, 5] = 1
+    #mat[0, 39] = 0.8
+    #mat[39, 0] = 0.2
+    mat[30, 30] = 1
     filename = input("Name of the image : ")
     img = cv2.imread(filename)
     img_copy = img.copy()
     image_grey = rgb2gray(img)
-
+    #theta_mat = image_grey.copy()
+    #print(theta_mat)
     print(str(len(mat)) + " " + str(len(mat[0])))
     print(str(len(image_grey)) + " " + str(len(image_grey[0])))
-    Assign_Orientation(image_grey, mat, img_copy)
+    theta_mat = Assign_Orientation(image_grey, mat, img_copy)
+    print(theta_mat)
 
     r = 600 / image_grey.shape[1]
     dim = (600, int(image_grey.shape[0] * r))
