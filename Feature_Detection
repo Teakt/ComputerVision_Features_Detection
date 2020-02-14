@@ -114,7 +114,7 @@ def Find_Corners(image , window_size = 8, k=0.04 , tresh = 0) :  # we create a f
     tresh = 0.05 * c_response.max()
     
     print(type(c_response))
-    print("PUTAIN3")
+
 
     offset = int(window_size / 2)
 
@@ -194,7 +194,7 @@ def main():
 
     result = Find_Corners(img)
 
-    cv2.imwrite('forpaint.png', result)
+    #cv2.imwrite('forpaint.png', result)
 
 
 main()
