@@ -7,6 +7,7 @@ from scipy import ndimage as ndi
 import math
 
 
+
 epsilon = 0.0001
 
 def gradient_x(image_grey):
@@ -41,7 +42,7 @@ def Find_Local_Peaks(matrix):
     return array_with_the_max_peak_coordinates
 
 
-def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a function that will find corners
+def Find_Corners(image , window_size = 20, k=0.04 ) :  # we create a function that will find corners
 
     #  For each point in the image, consider a window of pixels around that point
     # We choose a window of size 5
@@ -90,7 +91,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
     c_response =  det /  (trace + epsilon)
     #c_response = det - k*(trace**2)
 
-    tresh = 0.05 * c_response.max()
+    tresh = 0.2 * c_response.max()
     
     print(type(c_response))
 
@@ -124,6 +125,7 @@ def Find_Corners(image , window_size = 20, k=0.04 , tresh = 0) :  # we create a 
             if c > tresh:
                 # this is a corner
                 img_copy_for_corners[rowindex, colindex] = [255,0,0]
+                img_copy_for_corners = DrawCircle(img_copy_for_corners, (colindex, rowindex))
 
             elif c < 0:
                 # this is an edge
@@ -149,6 +151,8 @@ def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #imag
 
     height = image_grey.shape[0]
     width = image_grey.shape[1]
+
+    tresh = 0.2 * interest_point.max()
 
     #check if image and interest_point are the same size
     if type(image_grey) != type(interest_point) :
@@ -182,17 +186,19 @@ def Assign_Orientation(image_grey, interest_point, copy, window_size=16):  #imag
     for rowindex in range(offset, height - offset):
         for colindex in range(offset, width - offset):
 
-            if interest_point[rowindex , colindex ] > 0:
+            if interest_point[rowindex , colindex ] > tresh:
 
                 print(interest_point[rowindex , colindex ])
                 a = image_grey[rowindex  - 7 : rowindex  + 9, colindex - 7 : colindex  + 9]
                 for i in range(len(a)):
                     for j in range(len(a[i])):
-                        copy[rowindex  -7 + i,  colindex - 7 + j] = [255, 0, 255]
+                        #copy[rowindex  -7 + i,  colindex - 7 + j] = [255, 0, 255]
+
                         theta_mat[rowindex  -7 + i,  colindex - 7 + j] = math.atan((image_grey[i][j + 1] - image_grey[i][j - 1])/( (image_grey[i + 1][j] - image_grey[i - 1][j]) + epsilon)) * 180 / math.pi
 
 
                 copy[rowindex , colindex ] = [0, 255, 0]
+                copy = DrawCircle(copy, (colindex , rowindex ), 5 )
 
     #print(a)
     #print("theta")
@@ -281,6 +287,12 @@ def normalize(v):
        return v
     return v / norm
 
+def DrawCircle(image, center_coordinates, radius=4, color= (0, 255, 0), thickness = 1):
+
+    image = cv2.circle(image, center_coordinates, radius, color, thickness)
+
+    return image
+
 
 def main():
 
@@ -312,6 +324,7 @@ def main():
     dim = (600, int(img_copy.shape[0] * r))
     # perform the actual resizing of the image and show it
     resized_copy = cv2.resize(img_copy, dim, interpolation=cv2.INTER_AREA)
+
 
     cv2.imshow("test_img", resized)
     cv2.imshow("copy", resized_copy)
